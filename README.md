@@ -94,6 +94,30 @@ The proxy behavior can be configured through the following environment variables
 
 Contributions and suggestions are welcome! 😄
 
+This repository contains a [.devcontainer](https://code.visualstudio.com/docs/devcontainers/containers) configuration for Visual Studio Code. If you have the [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension installed, you can open the repository in a container and start contributing right away.
+
+[![Watch the video](https://img.youtube.com/vi/Dyweaat26nk/0.jpg)](https://www.youtube.com/watch?v=Dyweaat26nk)
+
+To run the GitHub Actions workflow locally, you can use [act](https://github.com/nektos/act) (installed in the development container):
+
+1. Create a `.env.variables` file with the following content:
+
+```bash
+DOCKERHUB_USERNAME=<your-dockerhub-username>
+```
+
+2. Create a `.env.secrets` file with the following content:
+
+```bash
+DOCKERHUB_PASSWORD=<your-dockerhub-pat>
+```
+
+3. Run the following command:
+
+```bash
+act --var-file .env.variables --secret-file .env.secrets
+```
+
 ## License
 
 This project is licensed under the MIT License - see the `LICENSE` file for details.

@@ -1,6 +1,16 @@
 ARG DEBIAN_VERSION=bookworm-slim
 FROM debian:${DEBIAN_VERSION}
 
+LABEL org.opencontainers.image.title="dev-proxy"
+LABEL org.opencontainers.image.description="Contains Microsoft Dev Proxy with pre-loaded and updated Microsoft Graph API metadata."
+LABEL org.opencontainers.image.version="0.21.0"
+LABEL org.opencontainers.image.url="https://hub.docker.com/repository/docker/cfelipe/dev-proxy"
+LABEL org.opencontainers.image.source="https://github.com/CarlosDomingues/dev-proxy-images"
+LABEL org.opencontainers.image.created="2024-10-19T00:00:00Z"
+LABEL org.opencontainers.image.authors="Carlos Domingues <11181378+CarlosDomingues@users.noreply.github.com>"
+LABEL org.opencontainers.image.documentation="https://github.com/CarlosDomingues/dev-proxy-images?tab=readme-ov-file#usage"
+LABEL org.opencontainers.image.licenses="MIT"
+
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG DEVPROXY_VERSION=v0.21.0

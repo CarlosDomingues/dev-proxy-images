@@ -37,4 +37,4 @@ ENV DEV_PROXY_LOG_LEVEL=Information
 EXPOSE ${DEVPROXY_PORT}
 EXPOSE 8897
 
-CMD ["bash", "-c", "/devproxy/devproxy", "--config-file", "${DEVPROXY_PRESET}", "--ip-address", "0.0.0.0", "--port", "${DEVPROXY_PORT}", "--log-level", "${DEV_PROXY_LOG_LEVEL}"]
+CMD ["bash", "-c", "/devproxy/devproxy --config-file ${DEVPROXY_PRESET} --ip-address 0.0.0.0 --port ${DEVPROXY_PORT} --log-level ${DEV_PROXY_LOG_LEVEL}"]

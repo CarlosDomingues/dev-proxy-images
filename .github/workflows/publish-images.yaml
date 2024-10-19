@@ -1,0 +1,52 @@
+name: Publish OCI images
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 0 * * *' # Runs daily
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  push_to_registry:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push images for all versions
+        run: |
+          # Loop over all version-specific Dockerfiles
+          for dockerfile in $(ls Dockerfile.*); do
+            version=$(echo $dockerfile | sed 's/Dockerfile.//')  # Extract version from filename
+            echo "Building and pushing image for version: $version"
+
+            # Build Docker image for this version
+            docker build -f $dockerfile -t ${{ vars.DOCKERHUB_USERNAME }}/dev-proxy:$version .
+
+            # Push the version-specific image
+            docker push ${{ vars.DOCKERHUB_USERNAME }}/dev-proxy:$version
+          done
+
+      # Optionally, build and push the 'latest' tag if there's a dedicated Dockerfile.latest
+      - name: Build and push latest image
+        if: "success() && steps.build_and_push_images.outcome == 'success'"
+        run: |
+          if [ -f Dockerfile.latest ]; then
+            echo "Building and pushing image for latest"
+            docker build -f Dockerfile.latest -t ${{ vars.DOCKERHUB_USERNAME }}/dev-proxy:latest .
+            docker push ${{ vars.DOCKERHUB_USERNAME }}/dev-proxy:latest
+          fi

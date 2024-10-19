@@ -1,5 +1,8 @@
 # dev-proxy-images
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/CarlosDomingues/dev-proxy-images/publish-images.yaml)
+![Docker Image Version](https://img.shields.io/docker/v/cfelipe/dev-proxy)
+
 OCI-compliant images containing [Microsoft Dev Proxy](https://github.com/microsoft/dev-proxy) with pre-loaded and updated Microsoft Graph API metadata. The built images are available on [Docker Hub](https://hub.docker.com/r/cfelipe/dev-proxy-msgraph).
 
 ## Usage

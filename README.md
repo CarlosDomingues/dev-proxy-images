@@ -67,6 +67,39 @@ response = requests.get(url, proxies=proxies, verify=False)
 print(response.json())
 ```
 
+**Example: using environment variables**
+
+Many clients support the `HTTP_PROXY` and `HTTPS_PROXY` environment variables (notably, clients based on `libcurl`). You can set these variables so all requests are routed through the proxy. The following Docker Compose configuration demonstrates how to do that:
+
+```yaml
+version: '3'
+
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/base:bullseye
+    entrypoint: /usr/local/share/docker-init.sh
+    command: sleep infinity 
+    environment:
+      HTTP_PROXY: http://devproxy:8000
+      HTTPS_PROXY: http://devproxy:8000
+      NO_PROXY: localhost,127.0.0.1
+
+  devproxy:
+    image: cfelipe/dev-proxy:latest
+    ports:
+      - "8000:8000"
+      - "8897:8897"
+    stdin_open: true
+    tty: true
+```
+
+Now all requests made from `app` service will be routed through the proxy. Try this out:
+
+```bash
+docker-compose up
+docker-compose exec app curl -k https://graph.microsoft.com/v1.0/me
+```
+
 ## Environment Variables
 
 The proxy behavior can be configured through the following environment variables:

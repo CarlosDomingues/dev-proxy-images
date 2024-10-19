@@ -1,4 +1,4 @@
-name: Publish OCI images
+name: Publish
 
 on:
   push:
